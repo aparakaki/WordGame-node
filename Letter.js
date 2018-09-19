@@ -14,7 +14,7 @@ function Letter(char, bool) {
 
     },
     this.userGuess = function(userChar) {
-        if(userChar === this.char) {
+        if(userChar.toLowerCase() === this.char.toLowerCase()) {
             this.guess = true;
         }
     }

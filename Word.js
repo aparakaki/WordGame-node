@@ -3,13 +3,13 @@ var Letter = require("./Letter.js");
 function Word() {
     this.letterArray = [],
     this.addLetter = function(word) {
+        this.letterArray = [];
          for (var i = 0; i < word.length; i++) {
             if(word[i] === " ") {
-            this.letterArray.push(new Letter(word[i]), true);
-                
+                this.letterArray.push(new Letter(word[i], true));
             }
             else {
-                this.letterArray.push(new Letter(word[i]), false);
+                this.letterArray.push(new Letter(word[i], false));
             }
         }
     },
@@ -27,7 +27,7 @@ function Word() {
     }, 
     this.wordCompleted = function() {
         for (let i = 0; i < this.letterArray.length; i++) {
-            if(!letterArray[i].guess) {
+            if(!this.letterArray[i].guess) {
                 return false;
             }
         }
