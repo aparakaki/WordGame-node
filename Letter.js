@@ -1,8 +1,11 @@
-function Letter(char) {
+function Letter(char, bool) {
     this.char = char,
-    this.guess = false,
+    this.guess = bool,
     this.charReturn = function() {
-        if(this.guess) {
+        if(this.char === " ") {
+            return " ";
+        }
+        else if(this.guess) {
             return this.char;
         }
         else {

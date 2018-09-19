@@ -4,7 +4,13 @@ function Word() {
     this.letterArray = [],
     this.addLetter = function(word) {
          for (var i = 0; i < word.length; i++) {
-            this.letterArray.push(new Letter(word[i]));
+            if(word[i] === " ") {
+            this.letterArray.push(new Letter(word[i]), true);
+                
+            }
+            else {
+                this.letterArray.push(new Letter(word[i]), false);
+            }
         }
     },
     this.getLetters = function() {
