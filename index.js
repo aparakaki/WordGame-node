@@ -4,12 +4,12 @@ var inquirer = require("inquirer");
 var wordBank = ["Silence of the Lambs", "Transformers", "The Incredibles", "Lady Bird", "Shutter Island",
                 "Slumdog Millionaire", "Scream", "Top Gun", "Crazy Rich Asians", "The Goonies"]
 var newWord = new Word();
-var wordInPlay;     //word that is currently being played
-var usedChars;      //keeps track of the characters guessed by user
-var chances;        //guesses per word
-var usedIndex;      //keeps track of the words used from the wordbank, to avoid repeats
-var gameCount = 0;  //keeps track of the number of words played, to decided when the game is over (run out of words)
-
+var wordInPlay;         //word that is currently being played
+var usedChars;          //keeps track of the characters guessed by user
+var chances;            //guesses per word
+var usedIndex = [];      //keeps track of the words used from the wordbank, to avoid repeats
+var gameCount = 0;       //keeps track of the number of words played, to decided when the game is over (run out of words)
+var wins = 0;
 
 function addWord() {
     chances = 10;
@@ -32,8 +32,28 @@ function getIndex() {
     }
 }
 
-addWord();
-runGame();
+function playAgain() {
+    if(gameCount < 10) {
+        inquirer.prompt([
+            {
+                type: "confirm",
+                name: "userchoice",
+                message: "Play again?"
+            }
+        ]).then(function(answer) {
+                if(answer.userchoice) {
+                    addWord();
+                    runGame();
+                }
+                else {
+                    console.log("\r\nGAME OVER\r\nYou got " + wins + " out of " + gameCount + " correct.")
+                }
+        })
+    }
+    else {
+        console.log("\r\nGAME OVER\r\nYou got " + wins + " out of " + gameCount + " correct.")
+    }
+}
 
 function runGame() {
     inquirer.prompt([
@@ -66,37 +86,19 @@ function runGame() {
         
         if (chances < 1) {
             console.log("You ran out of guesses!");
-
-            inquirer.prompt([
-                {
-                    type: "confirm",
-                    name: "userchoice",
-                    message: "Play again?"
-                }
-            ]).then(function(answer) {
-                    if(answer.userchoice) {
-                        addWord();
-                        runGame();
-                    }
-            })
+            playAgain();
         }
         else if(!newWord.wordCompleted()) {
             runGame();
         }
         else {
             console.log("You got it right!");
-            inquirer.prompt([
-                {
-                    type: "confirm",
-                    name: "userchoice",
-                    message: "Play again?"
-                }
-            ]).then(function(answer) {
-                    if(answer.userchoice) {
-                        addWord();
-                        runGame();
-                    }
-            })
+            wins++;
+            playAgain();
         }
     })
 }
+
+
+addWord();
+runGame();
