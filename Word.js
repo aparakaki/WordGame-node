@@ -2,6 +2,7 @@ var Letter = require("./Letter.js");
 
 function Word() {
     this.letterArray = [],
+
     this.addLetter = function(word) {
         this.letterArray = [];
          for (var i = 0; i < word.length; i++) {
@@ -13,6 +14,7 @@ function Word() {
             }
         }
     },
+
     this.getLetters = function() {
         let wordStr = "";
         for (let i = 0; i < this.letterArray.length; i++) {
@@ -25,6 +27,7 @@ function Word() {
             this.letterArray[i].userGuess(char);
         }
     }, 
+    
     this.wordCompleted = function() {
         for (let i = 0; i < this.letterArray.length; i++) {
             if(!this.letterArray[i].guess) {
